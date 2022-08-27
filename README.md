@@ -1,3 +1,3 @@
 # StarRating
 
-![mock.png](GIF/ezgif.com-gif-maker.gif)
+![mock.png](GIF/gif-maker.gif)
