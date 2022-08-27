@@ -1,7 +1,6 @@
 import UIKit
 
 public class StarRatingControl: UIControl {
-    
     // MARK: - Subtypes -
     
     private enum Constants {
@@ -53,7 +52,7 @@ public class StarRatingControl: UIControl {
         stackView.spacing = CGFloat(Constants.starsSpacing)
         return stackView
     }()
-        
+    
     // MARK: - Initializers -
     
     public init(totalStars: Int, frame: CGRect = .zero) {
@@ -64,28 +63,28 @@ public class StarRatingControl: UIControl {
     }
     
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Public Override Methods -
     
-    public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         rate(with: touches, event: event)
     }
     
-    public override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
         rate(with: touches, event: event)
     }
     
-    public override func accessibilityIncrement() {
+    override public func accessibilityIncrement() {
         super.accessibilityIncrement()
         ratingValue += 1
     }
     
-    public override func accessibilityDecrement() {
+    override public func accessibilityDecrement() {
         super.accessibilityDecrement()
         ratingValue -= 1
     }
@@ -105,11 +104,11 @@ public class StarRatingControl: UIControl {
     }
     
     private func loadView() {
-        for i in 1..._maximumStarsValue {
-            let star = StarRatingView()
-            star.isSelected = i <= _ratingValue
-            contentStack.addArrangedSubview(star)
-            star.widthAnchor.constraint(equalTo: star.heightAnchor).isActive = true
+        for item in 1..._maximumStarsValue {
+            let starRatingView = StarRatingView()
+            starRatingView.isSelected = item <= _ratingValue
+            contentStack.addArrangedSubview(starRatingView)
+            starRatingView.widthAnchor.constraint(equalTo: starRatingView.heightAnchor).isActive = true
         }
     }
     
@@ -136,7 +135,7 @@ public class StarRatingControl: UIControl {
         accessibilityTraits = .adjustable
         accessibilityLabel = NSLocalizedString(
             "starRatingControl",
-            bundle: Bundle.init(for: Self.self),
+            bundle: Bundle(for: Self.self),
             comment: ""
         )
         updateAccessibility()
@@ -145,7 +144,7 @@ public class StarRatingControl: UIControl {
     private func updateAccessibility() {
         let localizedFormat = NSLocalizedString(
             "stars",
-            bundle: Bundle.init(for: Self.self),
+            bundle: Bundle(for: Self.self),
             comment: ""
         )
         accessibilityValue = String.localizedStringWithFormat(localizedFormat, _ratingValue)

@@ -1,7 +1,6 @@
 import UIKit
 
 internal class StarRatingView: UIView {
-    
     // MARK: - Subtypes -
     
     private enum Constants {
@@ -11,7 +10,7 @@ internal class StarRatingView: UIView {
     
     // MARK: - Public Computed Instance Properties -
     
-    internal var isSelected: Bool = false {
+    internal var isSelected = false {
         didSet {
             imageView.image = isSelected ? Constants.selectedStarImage : Constants.unselectedStarImage
         }
@@ -33,7 +32,7 @@ internal class StarRatingView: UIView {
     }
     
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    internal required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
