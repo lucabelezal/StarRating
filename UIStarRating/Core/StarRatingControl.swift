@@ -53,15 +53,11 @@ public class StarRatingControl: UIControl {
         stackView.spacing = CGFloat(Constants.starsSpacing)
         return stackView
     }()
-    
-    // MARK: - Stored Instance Properties -
-    
-    private var totalStars: Int
-    
+        
     // MARK: - Initializers -
     
     public init(totalStars: Int, frame: CGRect = .zero) {
-        self.totalStars = totalStars
+        self._maximumValue = totalStars
         super.init(frame: frame)
         setupView()
         setupAccessibility()

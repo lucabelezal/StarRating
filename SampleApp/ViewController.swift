@@ -10,9 +10,8 @@ class ViewController: UIViewController {
     }()
     
     private lazy var ratingControl: StarRatingControl = {
-        let control = StarRatingControl()
+        let control = StarRatingControl(totalStars: 5)
         control.translatesAutoresizingMaskIntoConstraints = false
-        control.maximumValue = 5
         control.addTarget(self, action: #selector(valueChanged(_:)), for: .valueChanged)
         return control
     }()
