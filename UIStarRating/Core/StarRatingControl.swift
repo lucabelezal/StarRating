@@ -78,7 +78,7 @@ public class StarRatingControl: UIControl {
         super.touchesMoved(touches, with: event)
         rate(with: touches, event: event)
     }
-    
+        
     override public func accessibilityIncrement() {
         super.accessibilityIncrement()
         ratingValue += 1
