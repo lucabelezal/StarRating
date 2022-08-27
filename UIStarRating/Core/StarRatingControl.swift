@@ -5,43 +5,43 @@ public class StarRatingControl: UIControl {
     // MARK: - Subtypes -
     
     private enum Constants {
-        static let minMaximumValue = 3
-        static let maxMaximumValue = 10
-        static let defaultValue = 0
+        static let minStarsValue = 3
+        static let maxStarsValue = 10
+        static let defaultRatingValue = 0
         static let starsSpacing = 10
     }
     
     // MARK: - Public Computed Instance Properties -
     
-    public var maximumValue: Int {
-        get { _maximumValue }
+    public var maximumStarsValue: Int {
+        get { _maximumStarsValue }
         set {
-            let minimumValue = max(newValue, Constants.minMaximumValue)
-            _maximumValue = min(minimumValue, Constants.maxMaximumValue)
-            _value = min(_value, _maximumValue)
+            let minimumValue = max(newValue, Constants.minStarsValue)
+            _maximumStarsValue = min(minimumValue, Constants.maxStarsValue)
+            _ratingValue = min(_ratingValue, _maximumStarsValue)
         }
     }
     
-    public var value: Int {
-        get { _value }
+    public var ratingValue: Int {
+        get { _ratingValue }
         set {
-            let minValue = max(newValue, Constants.defaultValue)
-            _value = min(minValue, _maximumValue)
+            let minValue = max(newValue, Constants.defaultRatingValue)
+            _ratingValue = min(minValue, _maximumStarsValue)
         }
     }
     
     // MARK: - Private Computed Instance Properties -
     
-    private var _maximumValue: Int = Constants.minMaximumValue {
+    private var _maximumStarsValue: Int = Constants.minStarsValue {
         didSet {
-            if maximumValue != oldValue { reloadView() }
+            if maximumStarsValue != oldValue { reloadView() }
         }
     }
     
-    private var _value: Int = Constants.defaultValue {
+    private var _ratingValue: Int = Constants.defaultRatingValue {
         didSet {
             guard let stars = contentStack.arrangedSubviews as? [StarRatingView] else { return }
-            for (index, star) in stars.enumerated() { star.isSelected = index < _value }
+            for (index, star) in stars.enumerated() { star.isSelected = index < _ratingValue }
             updateAccessibility()
             sendActions(for: .valueChanged)
         }
@@ -57,7 +57,7 @@ public class StarRatingControl: UIControl {
     // MARK: - Initializers -
     
     public init(totalStars: Int, frame: CGRect = .zero) {
-        self._maximumValue = totalStars
+        self._maximumStarsValue = totalStars
         super.init(frame: frame)
         setupView()
         setupAccessibility()
@@ -82,12 +82,12 @@ public class StarRatingControl: UIControl {
     
     public override func accessibilityIncrement() {
         super.accessibilityIncrement()
-        value += 1
+        ratingValue += 1
     }
     
     public override func accessibilityDecrement() {
         super.accessibilityDecrement()
-        value -= 1
+        ratingValue -= 1
     }
     
     // MARK: - Private Methods -
@@ -105,9 +105,9 @@ public class StarRatingControl: UIControl {
     }
     
     private func loadView() {
-        for i in 1..._maximumValue {
+        for i in 1..._maximumStarsValue {
             let star = StarRatingView()
-            star.isSelected = i <= _value
+            star.isSelected = i <= _ratingValue
             contentStack.addArrangedSubview(star)
             star.widthAnchor.constraint(equalTo: star.heightAnchor).isActive = true
         }
@@ -126,7 +126,7 @@ public class StarRatingControl: UIControl {
         guard let touchLocation = touches.first?.location(in: contentStack) else { return }
         let centeredLocation = CGPoint(x: touchLocation.x, y: contentStack.frame.midY)
         guard let star = contentStack.hitTest(centeredLocation, with: event) as? StarRatingView else { return }
-        value = rate(for: star)
+        ratingValue = rate(for: star)
     }
     
     // MARK: - Accessibility -
@@ -148,6 +148,6 @@ public class StarRatingControl: UIControl {
             bundle: Bundle.init(for: Self.self),
             comment: ""
         )
-        accessibilityValue = String.localizedStringWithFormat(localizedFormat, _value)
+        accessibilityValue = String.localizedStringWithFormat(localizedFormat, _ratingValue)
     }
 }

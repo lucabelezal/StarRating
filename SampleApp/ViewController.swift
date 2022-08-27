@@ -37,8 +37,8 @@ class ViewController: UIViewController {
         
     @objc
     private func valueChanged(_ sender: StarRatingControl) {
-        print("\(sender.value)")
-        label.text = "\(sender.value)"
+        print("\(sender.ratingValue)")
+        label.text = "\(sender.ratingValue)"
     }
 }
 
